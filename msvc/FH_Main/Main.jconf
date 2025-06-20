@@ -1,0 +1,8 @@
+# ====== Àsİ’è ======
+-input file
+-filelist resources/filelist.txt
+
+# ====== ƒ‚ƒfƒ‹w’è ======
+-h model/hmmdefs_monof_mix16_gid.binhmm
+-dfa model/persons.dfa
+-dict model/phones.dict

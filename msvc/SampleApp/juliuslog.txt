@@ -1,0 +1,4 @@
+STAT: include config: D:\Misc\julius\Sample.jconf
+ERROR: m_chkparam: you should specify at least one LM to run Julius!
+STAT: include config: D:\Misc\julius\Sample.jconf
+ERROR: m_chkparam: you should specify at least one LM to run Julius!

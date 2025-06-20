@@ -135,3 +135,5 @@ ipch/
 *.vsp
 *.vspx
 *.sap
+
+msvc/FH_Main/resources

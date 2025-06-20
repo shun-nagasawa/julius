@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1062
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36127.28 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsent", "libsent\libsent.vcxproj", "{0867DE93-30F0-4D6E-AB7D-7E4545E5F24F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -48,6 +48,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mkbinhmmlist", "mkbinhmmlist\mkbinhmmlist.vcxproj", "{B24B4DC5-582F-4ABB-BE61-C430DD76CF64}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mkss", "mkss\mkss.vcxproj", "{9C13A19C-E5D8-4E1D-BEDB-73BC7C35C914}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FH_Main", "FH_Main\FH_Main.vcxproj", "{F6A3DF0A-9933-4DB8-B215-9751FF961625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -139,6 +141,10 @@ Global
 		{9C13A19C-E5D8-4E1D-BEDB-73BC7C35C914}.Debug|Win32.Build.0 = Debug|Win32
 		{9C13A19C-E5D8-4E1D-BEDB-73BC7C35C914}.Release|Win32.ActiveCfg = Release|Win32
 		{9C13A19C-E5D8-4E1D-BEDB-73BC7C35C914}.Release|Win32.Build.0 = Release|Win32
+		{F6A3DF0A-9933-4DB8-B215-9751FF961625}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F6A3DF0A-9933-4DB8-B215-9751FF961625}.Debug|Win32.Build.0 = Debug|Win32
+		{F6A3DF0A-9933-4DB8-B215-9751FF961625}.Release|Win32.ActiveCfg = Release|Win32
+		{F6A3DF0A-9933-4DB8-B215-9751FF961625}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
