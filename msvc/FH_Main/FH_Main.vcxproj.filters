@@ -27,21 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Main.jconf" />
-    <None Include="model\hmmdefs_monof_mix16_gid.binhmm">
-      <Filter>model</Filter>
-    </None>
-    <None Include="model\hmmdefs_ptm_gid.binhmm">
-      <Filter>model</Filter>
-    </None>
-    <None Include="model\persons.dfa">
-      <Filter>model</Filter>
-    </None>
-    <None Include="model\persons.dict">
-      <Filter>model</Filter>
-    </None>
-    <None Include="model\phones.dict">
-      <Filter>model</Filter>
-    </None>
+    <None Include="sample.adxlip" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\filelist.txt">
