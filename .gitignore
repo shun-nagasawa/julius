@@ -137,3 +137,6 @@ ipch/
 *.sap
 
 msvc/FH_Main/resources
+msvc/FH_Main/Misc/ref
+msvc/FH_Main/Misc/export
+

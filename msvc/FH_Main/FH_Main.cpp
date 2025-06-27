@@ -282,6 +282,7 @@ int main(int argc, char** argv) {
     return 1;
   }
 
+
   // 2) Main.jconf 自身を開き、-filelist 行を取得
   std::string filelist_path;
   {

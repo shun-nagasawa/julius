@@ -1,16 +1,20 @@
-#### GMM-HMM 音響モデル ####
 
--h model/phone_m/jnas-tri-3k16-gid.binhmm
--hlist model/phone_m/logicalTri-3k16-gid.bin
+
+#### 使用するHMM定義ファイル ####
+-h model/phone_m/hmmdefs_monof_mix16_gid.binhmm
 
 #### N-gram 言語モデル ####
 -d model/phone_m/bccwj.60k.bingram
 
-#### 単語辞書（必須）####
+#### N-gram、または文法用の単語辞書ファイルを指定 ####
 -v model/phone_m/lang_ja_test.htkdic
+-adddict model/phone_m/lt_words.htkdic
 
-# ファイル入力モード
+#### ファイル入力モード ####
 -input file
--filelist resources/filelist.txt
+-filelist Misc/filelist.txt
+
+#### 検出された入力が閾値以下なら棄却 ####
+-rejectshort 600
 
 

@@ -147,7 +147,7 @@
     <None Include="model\phone_m\jnas-tri-3k16-gid.binhmm" />
     <None Include="model\phone_m\lang_ja_test.htkdic" />
     <None Include="model\phone_m\logicalTri-3k16-gid.bin" />
-    <None Include="model\phone_m\phones.dic" />
+    <None Include="model\phone_m\lt_words.htkdic" />
     <None Include="sample.adxlip" />
   </ItemGroup>
   <ItemGroup>
