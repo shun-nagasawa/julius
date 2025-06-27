@@ -1,28 +1,16 @@
 #### GMM-HMM 音響モデル ####
+
 -h model/phone_m/jnas-tri-3k16-gid.binhmm
 -hlist model/phone_m/logicalTri-3k16-gid.bin
 
 #### N-gram 言語モデル ####
-# バイナリ形式のビッグラムを使う場合（高速読み込み）
 -d model/phone_m/bccwj.60k.bingram
 
 #### 単語辞書（必須）####
--v model/phone_m/phones.dic
-
-#### 入力設定：ファイルモード####
-
-# Phone アライメント（必須）
--palign
+-v model/phone_m/lang_ja_test.htkdic
 
 # ファイル入力モード
 -input file
 -filelist resources/filelist.txt
-
-# GMM-HMM モデルや辞書、LM の指定はそのまま
-
-# Pass-1 で MFCC を抽出してコールバックに渡す
-#PASS1.SYSTEM   = ON
-#PASS1.FEATURE  = mel
-#PASS1.FEAT     = mfcc
 
 

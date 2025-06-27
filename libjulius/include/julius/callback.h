@@ -236,6 +236,10 @@ enum {
   CALLBACK_DEBUG_PASS2_PUSH,
   CALLBACK_RESULT_PASS1_DETERMINED,
 
+  // @nagasawa
+  // added custom callbacl
+  CALLBACK_EVENT_USER1,
+
   SIZEOF_CALLBACK_ID
 };
 

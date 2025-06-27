@@ -19,6 +19,9 @@
     <Filter Include="model">
       <UniqueIdentifier>{2b4a25c2-cfe8-4a52-b3df-0099f4256637}</UniqueIdentifier>
     </Filter>
+    <Filter Include="model\phone_m">
+      <UniqueIdentifier>{7158122d-ac71-4f32-b935-bbfd4724fe36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FH_Main.cpp">
@@ -28,6 +31,21 @@
   <ItemGroup>
     <None Include="Main.jconf" />
     <None Include="sample.adxlip" />
+    <None Include="model\phone_m\bccwj.60k.bingram">
+      <Filter>model\phone_m</Filter>
+    </None>
+    <None Include="model\phone_m\jnas-tri-3k16-gid.binhmm">
+      <Filter>model\phone_m</Filter>
+    </None>
+    <None Include="model\phone_m\lang_ja_test.htkdic">
+      <Filter>model\phone_m</Filter>
+    </None>
+    <None Include="model\phone_m\logicalTri-3k16-gid.bin">
+      <Filter>model\phone_m</Filter>
+    </None>
+    <None Include="model\phone_m\phones.dic">
+      <Filter>model\phone_m</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\filelist.txt">

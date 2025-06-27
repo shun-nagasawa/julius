@@ -669,6 +669,11 @@ result_error(Recog *recog, int status)
   if (ok_p) {			/* had some input */
     /* output as rejected */
     callback_exec(CALLBACK_RESULT, recog);
+
+    // @nagasawa
+    // apply custom callback
+    callback_exec(CALLBACK_EVENT_USER1, recog);
+
 #ifdef ENABLE_PLUGIN
     plugin_exec_process_result(recog);
 #endif
@@ -1358,6 +1363,11 @@ j_recognize_stream_core(Recog *recog)
 
     /* output result */
     callback_exec(CALLBACK_RESULT, recog);
+
+    // @nagasawa
+    // apply custom callback
+    callback_exec(CALLBACK_EVENT_USER1, recog);
+
 #ifdef ENABLE_PLUGIN
     plugin_exec_process_result(recog);
 #endif
