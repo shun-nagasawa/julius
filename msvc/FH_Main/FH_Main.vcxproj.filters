@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="resources">
-      <UniqueIdentifier>{f33c9626-1282-4eb0-a95a-8e7a0a06e502}</UniqueIdentifier>
-    </Filter>
     <Filter Include="model">
       <UniqueIdentifier>{2b4a25c2-cfe8-4a52-b3df-0099f4256637}</UniqueIdentifier>
     </Filter>
@@ -46,10 +43,5 @@
     <None Include="model\phone_m\lt_words.htkdic">
       <Filter>model\phone_m</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="resources\filelist.txt">
-      <Filter>resources</Filter>
-    </Text>
   </ItemGroup>
 </Project>

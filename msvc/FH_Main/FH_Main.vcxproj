@@ -150,9 +150,6 @@
     <None Include="model\phone_m\lt_words.htkdic" />
     <None Include="sample.adxlip" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="resources\filelist.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

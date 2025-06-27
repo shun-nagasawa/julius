@@ -47,7 +47,11 @@ static std::vector<std::string> phones;
 static std::string g_wav_path;
 
 
-// EUC-JP→UTF-8 変換ユーティリティ
+/// <summary>
+/// EUC-JP→UTF-8 変換ユーティリティ
+/// </summary>
+/// <param name="eucjp"></param>
+/// <returns></returns>
 std::string eucjp_to_utf8(const char* eucjp)
 {
   // 1) EUC-JP バイト列 → UTF-16（ワイド文字列）
@@ -64,6 +68,12 @@ std::string eucjp_to_utf8(const char* eucjp)
   return u8buf;
 }
 
+
+/// <summary>
+/// 「第１パス」（特徴量抽出パス）が終わったタイミングで呼ばれるコールバック
+/// </summary>
+/// <param name="recog"></param>
+/// <param name=""></param>
 static void pass1_end_callback(Recog* recog, void* /*dummy*/) {
   feats.clear();
   // recog->mfcclist に第一パスで計算された全フレーム MFCC が入っている
@@ -75,7 +85,8 @@ static void pass1_end_callback(Recog* recog, void* /*dummy*/) {
 
     // 各フレームごとにベクトルをコピー
     for (unsigned int t = 0; t < nframes; ++t) {
-      float* vec = param->parvec[t];  // 長さ dim の配列
+      // 長さ dim の配列
+      float* vec = param->parvec[t];
       std::vector<float> frame(vec, vec + dim);
       feats.push_back(std::move(frame));
     }
@@ -84,7 +95,7 @@ static void pass1_end_callback(Recog* recog, void* /*dummy*/) {
 
 
 /// <summary>
-/// 音素解析、母音強度、母音検出等のコア実装
+/// Julius の認識結果を使って「フレームごとの音素ラベル＋母音強度＋エネルギー」を計算し、あらかじめ開いてある出力ストリーム (outf) に書き出す
 /// </summary>
 /// <param name="recog"></param>
 /// <param name=""></param>
@@ -229,8 +240,9 @@ static void result_callback(Recog* recog, void* /*dummy*/) {
 }
 
 
+
 /// <summary>
-/// 音声から音素を書き起こす処理
+/// 生の音声 → Julius が認識した単語列 → 見やすい形でログに出力
 /// </summary>
 static void parse_string_callback(Recog* recog, void* /*user_data*/) {
 
@@ -262,7 +274,7 @@ static void parse_string_callback(Recog* recog, void* /*user_data*/) {
     }
 
     std::string hyp = oss.str();
-    std::cerr << "[HYP] " << hyp << std::endl;
+    std::cerr << "[Lips_ja] " << hyp << std::endl;
   }
 }
 
@@ -273,6 +285,14 @@ int main(int argc, char** argv) {
   // ① コンソールを UTF-8 モードに
   SetConsoleOutputCP(CP_UTF8);
   SetConsoleCP(CP_UTF8);
+
+  // adxlip フォルダ作成
+  if (!CreateDirectoryA("adxlip", NULL)) {
+    DWORD err = GetLastError();
+    if (err != ERROR_ALREADY_EXISTS) {
+      std::cerr << "ERROR: Failed to create adxlip directory (code " << err << ")" << std::endl;
+    }
+  }
 
   const char* config_file = "Main.jconf";
 
@@ -339,21 +359,27 @@ int main(int argc, char** argv) {
     g_wav_path = wav;
     std::cerr << "[DEBUG] using WAV: " << g_wav_path << std::endl;
 
-    // 出力ファイル名を WAV ベースで生成
+
     // 出力ファイル名を WAV ベースで生成 (filesystem を使わず手動でパス処理)
     std::string base = wav;
+
     // パス区切り文字でファイル名部分を抽出
     auto pos = base.find_last_of("/\\");
     if (pos != std::string::npos) {
       base = base.substr(pos + 1);
     }
+
     // 拡張子を除去
     auto dot = base.find_last_of('.');
-    if (dot != std::string::npos) base = base.substr(0, dot);
+    if (dot != std::string::npos) {
+      base = base.substr(0, dot);
+    }
+
     std::string out_name = base + ".adxlip";
-    outf.open(out_name, std::ios::out | std::ios::trunc);
+    std::string out_path = std::string("adxlip\\") + out_name;
+    outf.open(out_path, std::ios::out | std::ios::trunc);
     if (!outf) {
-      std::cerr << "Cannot open output file: " << out_name << std::endl;
+      std::cerr << "Cannot open output file: " << out_path << std::endl;
       continue;
     }
 
