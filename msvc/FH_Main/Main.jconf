@@ -1,13 +1,15 @@
 
 
-#### 使用するHMM定義ファイル ####
--h model/phone_m/hmmdefs_monof_mix16_gid.binhmm
+#### 音響モデル ####
+#### grammar-kit\model\phone_m ####
+-h thirdparty/grammar-kit/model/phone_m/hmmdefs_monof_mix16_gid.binhmm
 
-#### N-gram 言語モデル ####
--d model/phone_m/bccwj.60k.bingram
+#### 言語モデル ####
+#### dictation-kit\model\lang_m ####
+-d thirdparty/dictation-kit/model/lang_m/bccwj.60k.bingram
 
 #### N-gram、または文法用の単語辞書ファイルを指定 ####
--v model/phone_m/lang_ja_test.htkdic
+-v thirdparty/dictation-kit/model/lang_m/bccwj.60k.htkdic
 -adddict model/phone_m/lt_words.htkdic
 
 #### ファイル入力モード ####

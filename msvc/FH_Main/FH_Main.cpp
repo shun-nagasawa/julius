@@ -240,7 +240,6 @@ static void result_callback(Recog* recog, void* /*dummy*/) {
 }
 
 
-
 /// <summary>
 /// 生の音声 → Julius が認識した単語列 → 見やすい形でログに出力
 /// </summary>
@@ -282,7 +281,7 @@ static void parse_string_callback(Recog* recog, void* /*user_data*/) {
 
 int main(int argc, char** argv) {
 
-  // ① コンソールを UTF-8 モードに
+  // コンソールを UTF-8 モードに
   SetConsoleOutputCP(CP_UTF8);
   SetConsoleCP(CP_UTF8);
 
@@ -294,9 +293,8 @@ int main(int argc, char** argv) {
     }
   }
 
+  // 1) Julius 初期化
   const char* config_file = "Main.jconf";
-
-  // Julius 初期化
   Jconf* jconf = j_config_load_file_new(const_cast<char*>(config_file));
   if (!jconf) {
     return 1;
@@ -358,7 +356,6 @@ int main(int argc, char** argv) {
   for (const auto& wav : wav_list) {
     g_wav_path = wav;
     std::cerr << "[DEBUG] using WAV: " << g_wav_path << std::endl;
-
 
     // 出力ファイル名を WAV ベースで生成 (filesystem を使わず手動でパス処理)
     std::string base = wav;
