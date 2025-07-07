@@ -1,2 +1,3 @@
 Misc/export/Convert_VO_02_001000_0110_jp.wav
 Misc/export/Convert_VO_02_001000_0150_jp.wav
+Misc/export/Convert_VO_03_003000_0050_jp.wav

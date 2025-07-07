@@ -1,16 +1,21 @@
 
 
 #### 音響モデル ####
-#### grammar-kit\model\phone_m ####
 -h thirdparty/grammar-kit/model/phone_m/hmmdefs_monof_mix16_gid.binhmm
+#-h thirdparty/dictation-kit/model/phone_m/jnas-tri-3k16-gid.binhmm
+
 
 #### 言語モデル ####
-#### dictation-kit\model\lang_m ####
--d thirdparty/dictation-kit/model/lang_m/bccwj.60k.bingram
+#-d thirdparty/dictation-kit/model/lang_m/bccwj.60k.bingram
+-d thirdparty/dictation-kit/model/lang_m/new.bingram
 
-#### N-gram、または文法用の単語辞書ファイルを指定 ####
+#### 言語モデルの辞書ファイルを指定 ####
 -v thirdparty/dictation-kit/model/lang_m/bccwj.60k.htkdic
--adddict model/phone_m/lt_words.htkdic
+
+# 5) カスタム辞書
+# 固有名詞／専門用語を追加
+-adddict thirdparty/dictation-kit/model/lang_m/new.htkdic
+
 
 #### ファイル入力モード ####
 -input file

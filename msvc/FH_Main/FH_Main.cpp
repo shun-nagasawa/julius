@@ -47,27 +47,6 @@ static std::vector<std::string> phones;
 static std::string g_wav_path;
 
 
-/// <summary>
-/// EUC-JP→UTF-8 変換ユーティリティ
-/// </summary>
-/// <param name="eucjp"></param>
-/// <returns></returns>
-std::string eucjp_to_utf8(const char* eucjp)
-{
-  // 1) EUC-JP バイト列 → UTF-16（ワイド文字列）
-  int wlen = MultiByteToWideChar(51932 /* CP_EUCJP */, 0, eucjp, -1, nullptr, 0);
-  if (wlen == 0) return "";
-  std::wstring wbuf(wlen, L'\0');
-  MultiByteToWideChar(51932, 0, eucjp, -1, &wbuf[0], wlen);
-
-  // 2) UTF-16 → UTF-8
-  int u8len = WideCharToMultiByte(CP_UTF8, 0, wbuf.c_str(), -1, nullptr, 0, nullptr, nullptr);
-  if (u8len == 0) return "";
-  std::string u8buf(u8len, '\0');
-  WideCharToMultiByte(CP_UTF8, 0, wbuf.c_str(), -1, &u8buf[0], u8len, nullptr, nullptr);
-  return u8buf;
-}
-
 
 /// <summary>
 /// 「第１パス」（特徴量抽出パス）が終わったタイミングで呼ばれるコールバック
@@ -148,6 +127,23 @@ static void result_callback(Recog* recog, void* /*dummy*/) {
     }
   }
 
+
+  // スムージング（5フレーム移動平均）
+  std::vector<float> smooth_energy(N);
+  const int window = 2;  // 前後2フレーム＋自分 = 5フレーム
+  for (int f = 0; f < N; ++f) {
+    float sum = 0.0f;
+    int count = 0;
+    for (int k = -window; k <= window; ++k) {
+      int idx = f + k;
+      if (idx >= 0 && idx < N) {
+	sum += energy[idx];
+	++count;
+      }
+    }
+    smooth_energy[f] = sum / count;
+  }
+
   // 3) ヘッダー出力（WAV 名 + 60fps 固定）
   outf << "// input: " << g_wav_path << "\n";
   outf << "// framerate: 60 [fps]\n";
@@ -167,12 +163,6 @@ static void result_callback(Recog* recog, void* /*dummy*/) {
     int msec = int(f * (1000.0 / 60.0) + 0.5);
 
     const std::string& ph = phones[f];
-
-#if false
-    if (!ph.empty()) {
-      std::cerr << "[DEBUG] frame=" << f << " phone=\"" << ph << "\"\n";
-    }
-#endif
 
     // --- ① コンテキスト「-」「+」の間から現在音素を抽出 ---
     // 長母音（a: や u:）
@@ -196,17 +186,54 @@ static void result_callback(Recog* recog, void* /*dummy*/) {
       }
     }
 
-    // 正規化した母音強度 (0–1)
-    float strength = (v ? energy[f] / Emax : 0.0f);
+    // 2025/07/07追加
+    // A と O のときのハングオーバー用変数（関数スコープ内 static で次呼び出しまで保持）
+    static char last_vowel = 0;
+    static int  hang_count = 0;
+    static float last_strength = 0.0f;
+    const int HANG_FRAMES = 3;  // フレーム数分だけ引き延ばす
 
-    // ② 各母音フラグを立てる
+    // もし母音が検出されなかった→直前が A/O かつまだ引き延ばしカウント内なら継続
+    if (v == 0 && (last_vowel == 'A' || last_vowel == 'O') && hang_count < HANG_FRAMES) {
+      // A/O のホールド
+      v = last_vowel;
+      ++hang_count;
+    }
+    else if (v == 'A' || v == 'O') {
+      // 新規 A/O
+      last_vowel = v;
+      last_strength = smooth_energy[f] / Emax;
+      hang_count = 0;
+    }
+    else {
+      // I/E/U または完全無音（ホールド切れ含む）はクリア
+      last_vowel = 0;
+      last_strength = 0.0f;
+      hang_count = 0;
+    }
+    // 2025/07/07追加
+
+    // 正規化した母音強度 (0–1)
+    //float strength = (v ? smooth_energy[f] / Emax : 0.0f);
+    float strength;
+    if (v == last_vowel && hang_count > 0) {
+      // ホールド中は前回の強度をそのまま使う
+      strength = last_strength;
+    }
+    else {
+      // 通常フレーム：そのまま正規化
+      strength = (v ? smooth_energy[f] / Emax : 0.0f);
+      // I/E/U の場合でも last_strength を更新したければここで同様に代入可能
+    }
+
+    // 各母音フラグを立てる
     float A = (v == 'A') ? strength : 0.0f;
     float I = (v == 'I') ? strength : 0.0f;
     float U = (v == 'U') ? strength : 0.0f;
     float E = (v == 'E') ? strength : 0.0f;
     float O = (v == 'O') ? strength : 0.0f;
 
-    // ③ 母音区間の開始／終了を検出
+    // 母音区間の開始／終了を検出
     if (!in_region && v) {
       in_region = true;
       cur_region.start_frame = f;
@@ -220,7 +247,7 @@ static void result_callback(Recog* recog, void* /*dummy*/) {
       regions.push_back(cur_region);
     }
 
-    float db = 10.0f * std::log10(energy[f]);
+    float db = 10.0f * std::log10(smooth_energy[f]);
 
     // ⑤ ファイル出力
     outf << f << ", "
@@ -276,7 +303,6 @@ static void parse_string_callback(Recog* recog, void* /*user_data*/) {
     std::cerr << "[Lips_ja] " << hyp << std::endl;
   }
 }
-
 
 
 int main(int argc, char** argv) {
@@ -409,5 +435,6 @@ int main(int argc, char** argv) {
   j_jconf_free(jconf);
   return 0;
 }
+
 
 

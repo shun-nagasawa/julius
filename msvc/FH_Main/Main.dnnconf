@@ -1,0 +1,18 @@
+# --- sample.dnnconf ---
+
+# 1) 音響モデル
+-h thirdparty/grammar-kit/model/phone_m/hmmdefs_monof_mix16_gid.binhmm
+#-mva thirdparty/grammar-kit/model/phone_dnn/your_am.nnet8
+
+# 2) 言語モデル
+-d thirdparty/dictation-kit/model/lang_m/bccwj.60k.bingram
+-v thirdparty/dictation-kit/model/lang_m/bccwj.60k.htkdic
+
+# 3) カスタム辞書
+-add_dict model/phone_m/lt_words.htkdic
+
+# 4) 入力モード／その他
+-input file
+-filelist Misc/filelist.txt
+-rejectshort 600
+

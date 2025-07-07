@@ -24,15 +24,24 @@
     <ClCompile Include="FH_Main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Main.jconf" />
     <None Include="sample.adxlip" />
-    <None Include="model\phone_m\lang_ja_test.htkdic">
-      <Filter>model\phone_m</Filter>
-    </None>
     <None Include="model\phone_m\lt_words.htkdic">
       <Filter>model\phone_m</Filter>
     </None>
+    <None Include="Main.dnnconf" />
+    <None Include="Build_Corpus.bat">
+      <Filter>ソース ファイル</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Utils.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
